@@ -1,4 +1,4 @@
-data WeekDay = Sunday
+data Weekday = Sunday
              | Monday
              | Tuesday
              | Wednesday
@@ -12,9 +12,19 @@ main = do
 
     let day = Wednesday
         activity = case day of
-            Sunday -> "Walking"
+            Sunday -> "Jumping"
             Monday -> "Talking"
-            Friday -> "Rocking"
-            _      -> "Mocking"
+            Friday -> "Climbing"
+            _      -> "Dancing"
 
-    print (day, activity)
+    putStrLn (show day ++ " is for " ++ activity)
+
+
+getWeather :: Weekday -> String
+getWeather Sunday    = "Sunny"
+getWeather Monday    = "Rainy"
+getWeather Tuesday   = "Cloudy"
+getWeather Wednesday = "Windy"
+getWeather Thursday  = "Giraffes"
+getWeather Friday    = "Hail"
+getWeather Saturday  = "Snow"

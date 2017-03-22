@@ -1,13 +1,16 @@
 -- Building data
 data Foo = Foo Int String
 
+-- Defines a type and a constructor at the same time
+data FooType = FooCons Int String
+
 main = do
     -- Constructing a value
     let x = Foo 4 "Four"
 
     -- Deconstructing a value
     -- (pattern matching)
-    let Foo one two = x
+    let (Foo one two) = x
 
     print one
     print two
