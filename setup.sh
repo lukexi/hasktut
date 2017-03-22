@@ -6,4 +6,5 @@ curl -sSL https://get.haskellstack.org/ | sh
 
 brew install sdl2
 
+stack setup
 stack build
