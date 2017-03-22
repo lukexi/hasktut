@@ -29,6 +29,7 @@ generateTransforms t i =
         m44 = mkTransformation
                 (axisAngle (V3 1 1 0) 1)
                 (V3 (x+10) (y + sin (t + fromIntegral i)) 0)
+                !*! scaleMatrix 0.1
     in m44
 
 generateColors :: Integral a => GLfloat -> a -> V4 GLfloat

@@ -7,6 +7,14 @@ main = do
     print x5
     print x6
     print x7
+    print x8
+    print x10
+    print x11
+
+    let a = "Q"
+        b = (++"???")
+    putStrLn (b a)
+
 
 
 x1 = 1 + 1 + 1 + 1
@@ -24,3 +32,8 @@ x4 = succHarder 1
 x5 = (2 +) 1
 x6 = (+ 2) 1
 x7 = (+) 2 1
+
+x8 = succ $ 1
+
+x10 = succ $ succ $ succ $ 1
+x11 = succ . succ . succ $ 1
