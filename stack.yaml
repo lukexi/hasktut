@@ -1,0 +1,23 @@
+resolver: lts-8.5
+packages:
+- '.'
+- location:
+    git: git@github.com:lukexi/linear-extra.git
+    commit: master
+  extra-dep: true
+- location:
+    git: git@github.com:lukexi/sdl-pal.git
+    commit: master
+  extra-dep: true
+- location:
+    git: git@github.com:lukexi/gl-pal.git
+    commit: master
+  extra-dep: true
+- location:
+    git: git@github.com:lukexi/gl.git
+    commit: master
+  extra-dep: true
+- location:
+    git: git@github.com:lukexi/halive.git
+    commit: master
+  extra-dep: true

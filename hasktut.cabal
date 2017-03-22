@@ -1,0 +1,39 @@
+name:                hasktut
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/lukexi/hasktut#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Luke Iannini
+maintainer:          lukexi@me.com
+copyright:           Luke Iannini
+category:            Developer
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Lib
+  build-depends:       base >= 4.7 && < 5
+                     , sdl-pal
+                     , gl
+                     , gl-pal
+                     , time
+                     , mtl
+                     , vector
+                     , halive
+  default-language:    Haskell2010
+
+executable hasktut
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , hasktut
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/lukexi/hasktut
