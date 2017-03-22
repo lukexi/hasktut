@@ -7,4 +7,14 @@ data WeekDay = Sunday
              | Saturday
              deriving (Show, Enum)
 
-main = print [Sunday .. Saturday]
+main = do
+    print [Sunday .. Saturday]
+
+    let day = Wednesday
+        activity = case day of
+            Sunday -> "Walking"
+            Monday -> "Talking"
+            Friday -> "Rocking"
+            _      -> "Mocking"
+
+    print (day, activity)

@@ -17,7 +17,8 @@ packages:
     git: git@github.com:lukexi/gl.git
     commit: master
   extra-dep: true
-- location:
-    git: git@github.com:lukexi/halive.git
-    commit: master
-  extra-dep: true
+# - location:
+#     git: git@github.com:lukexi/halive.git
+#     commit: master
+#   extra-dep: true
+- '../television/submodules/halive'

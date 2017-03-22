@@ -1,6 +1,7 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Lib
@@ -10,7 +11,9 @@ module Lib
 import SDL.Pal
 import Graphics.GL.Pal
 import Halive.Utils
+import Halive
 import Control.Monad.Reader
+import Control.Exception
 import Data.Time
 
 import qualified Data.Vector.Storable.Mutable as VM
@@ -22,20 +25,6 @@ data Uniforms = Uniforms
 numInstances :: Num a => a
 numInstances = 10000
 
-generateTransforms :: Integral a => GLfloat -> a -> M44 GLfloat
-generateTransforms t i =
-    let x = fromIntegral $ (i `div` 100) - 50 :: GLfloat
-        y = fromIntegral $ (i `mod` 100) - 50 :: GLfloat
-        m44 = mkTransformation
-                (axisAngle (V3 1 1 0) 1)
-                (V3 (x+10) (y + sin (t + fromIntegral i)) 0)
-                !*! scaleMatrix 0.1
-    in m44
-
-generateColors :: Integral a => GLfloat -> a -> V4 GLfloat
-generateColors t i = colorHSL hue 0.9 0.6
-    where hue = fromIntegral i / numInstances + sin (t/5)
-
 
 cubeRenderer :: IO ()
 cubeRenderer = do
@@ -45,6 +34,11 @@ cubeRenderer = do
 
     cubeGeo       <- cubeGeometry 0.5 1
     cubeShape     <- makeShape cubeGeo shader
+
+    ghc <- startGHCDefault
+
+    getCompiledCubes <- liveExpression ghc "tut/cubes.hs" "cubes"
+        (\(t::GLfloat) -> [])
 
     -- Create buffers for our data
     transformsVector <- VM.replicate numInstances (identity :: M44 GLfloat)
@@ -73,15 +67,20 @@ cubeRenderer = do
         t <- (*10) . realToFrac . utctDayTime <$> getCurrentTime
 
         -- Fill buffers with newest data
-        loopM numInstances (\i -> VM.write transformsVector i (generateTransforms t i))
-        loopM numInstances (\i -> VM.write colorsVector i (generateColors t i))
+        generateCubes <- getCompiledCubes
+        let cubes = generateCubes t
+        count <- foldM (\_acc (i, (transform, color)) -> do
+            VM.write transformsVector i transform
+            VM.write colorsVector     i color
+            return i) 0 (zip [0..numInstances-1] cubes)
+            `catch` (\(e :: SomeException) -> print e >> return 0)
         bufferSubDataV transformsBuffer transformsVector
         bufferSubDataV colorsBuffer     colorsVector
 
         withShape cubeShape $ do
             Uniforms{..} <- asks sUniforms
             uniformM44 uProjectionView (projection !*! view)
-            drawShapeInstanced numInstances
+            drawShapeInstanced (fromIntegral count)
 
         glSwapWindow win
 
