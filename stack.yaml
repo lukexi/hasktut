@@ -2,23 +2,22 @@ resolver: lts-8.5
 packages:
 - '.'
 - location:
-    git: git@github.com:lukexi/linear-extra.git
+    git: https://github.com/lukexi/linear-extra.git
     commit: master
   extra-dep: true
 - location:
-    git: git@github.com:lukexi/sdl-pal.git
+    git: https://github.com/lukexi/sdl-pal.git
     commit: master
   extra-dep: true
 - location:
-    git: git@github.com:lukexi/gl-pal.git
+    git: https://github.com/lukexi/gl-pal.git
     commit: master
   extra-dep: true
 - location:
-    git: git@github.com:lukexi/gl.git
+    git: https://github.com/lukexi/gl.git
     commit: master
   extra-dep: true
-# - location:
-#     git: git@github.com:lukexi/halive.git
-#     commit: master
-#   extra-dep: true
-- '../television/submodules/halive'
+- location:
+    git: https://github.com/lukexi/halive.git
+    commit: master
+  extra-dep: true
